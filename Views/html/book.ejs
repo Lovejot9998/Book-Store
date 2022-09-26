@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Page</title>
+</head>
+<body>
+    <header>
+        <a href="/home"><div class="logo">
+            <img class="logo-img" src="../media/logo.svg" alt="logo image" width="60px">
+            <h2>Book<br>Smart</h2>
+        </div></a>
+        <nav>
+            <ul>              
+                <li>
+                    <div class="signin-dropdown" >
+                        <button class="drop-button">Sign in <img src="../media/down-arrow.svg" alt="down-arrow-icon" ></button>
+                        <div class="dropdown-content">
+                            <a href="/login">Login</a>
+                            <a href="/signup">Register</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="/profile/user" ><img class="user" src="../media/user.svg" alt="user-icon" width="35px"/></a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="gradient" style="background:url(../media/backgroung-gradient.jpg) center no-repeat;" data-v-99800650=""></div>
+
+    <main>
+        <div class="book">
+            <div class="book-cover">
+                <img src="<%= book_details.cover_path %>">
+            </div>
+            <div class="book-details">
+                    <cite class="book-title"><%= book_details.title %></cite>
+                    <p class="author"><%= book_details.author %></p>
+                    <p class="description"><%- book_details.description %></p>
+
+                    <div class="book_details_grid">
+                        <div>
+                            <div class="publisher">
+                                <p>Publisher:</p> 
+                                <p><%= book_details.publisher %></p>
+                            </div>
+                            <div class="year">
+                                <p>Year:</p> 
+                                <p><%= book_details.year %></p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="language">
+                                <p>Language:</p>
+                                <p><%= book_details.language %></p> 
+                            </div>
+                            <div class="category">
+                                <p>Category:</p> 
+                                <p><%= book_details.category %></p>
+                            </div>   
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <button class="btn-download"><img src="../media/downlaod-icon.svg">Download</button><hr>
+        <div class="comment-section">
+            <h4>Comments</h4>
+    
+            <% if(typeof msg != 'undefined') {%>
+                <form action="/home/book/addComment" method="post">
+                    <p class="error">You have to login to post a review.</p>  
+
+                    <input type="text" name="id" value="<%= book_details.id %>" hidden> 
+                    <input type="text" id="name" name="name" required placeholder="Enter Your Name" disabled><br><br>
+                    <textarea id="review" name="review" rows="4" cols="50" required placeholder="Write a review" disabled></textarea><br><br>
+    
+                    <button type="submit" id="submit-comment" disabled>Submit</button>
+                </form>
+            <% } else{%>
+                <form action="/home/book/addComment" method="post">
+                    <input type="text" name="id" value="<%= book_details.id %>" hidden> 
+                    <input type="text" id="name" name="name" required placeholder="Enter Your Name"><br><br>
+                    <textarea id="review" name="review" rows="4" cols="50" required placeholder="Write a review"></textarea><br><br>
+
+                    <button type="submit" id="submit-comment">Submit</button>
+                </form>
+            <% }%>
+            
+
+            <div class="comments">
+                <!--Displays all comments -->
+                <% book_details.comments.reverse()%>
+                <% for (var i = 0; i < book_details.comments.length; i++) { %>
+                    <div class="comment">
+                        <p class="user-name"><%= book_details.comments[i].user_name %></p>
+                        <p class="user-review"><%= book_details.comments[i].comment %></p>
+                    </div>
+                <% } %>     
+            </div>
+        </div>
+    </main><hr>
+    <footer>
+            <div class="copyright-info">
+                <p>Copyright &copy; 2022</p>
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li>Icons by <a href="https://iconscout.com">Iconscout</a></li>
+                    <li><a style="color: #000;">support@abc.com</a></li>
+                    <li><a href="">Privacy Policy</a></li>
+                    <li><a class="top-btn" href="#top">&uarr;</a></li>
+                </ul> 
+            </div>
+    </footer>
+</body>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html{
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        max-width: 1500px;
+        margin: auto;
+        
+    } 
+    body{
+        margin: 2% 5%;
+    }
+    header{
+        display: flex;
+        justify-content: space-between;
+    }
+    header a{
+        color: #000;
+    }
+    .logo img, .logo h2{
+        float: left;
+        font-weight: 500;
+    }
+    nav ul{
+        list-style: none;
+        display: flex;
+    }
+    nav li{
+        padding-left: 2em;
+    }
+    .drop-button {
+        text-align: left;
+        background-color: #fff;
+        color:#1f1f1f;
+        padding: 0.5em 0.8em;
+        font-size: 1em;
+        border: none;
+        border-radius: 5px;
+        border: 1px rgb(225, 220, 220) solid;
+        width: 6rem;
+    }
+    .drop-button img{
+        position: absolute;
+        width: 26px;
+        top: 0.3em;
+    }
+
+    .signin-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        border-radius: 5px;
+        width: 6rem;
+    }
+
+    .dropdown-content a {
+        color: #1f1f1f;
+        padding: 0.8em 1.5em;
+        text-decoration: none;
+        display: block;
+    }
+    .dropdown-content a:last-child{
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    .dropdown-content a:hover {background-color: #00000008;}
+
+    .signin-dropdown:hover .dropdown-content {
+        display: block;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .signin-dropdown:hover .drop-button {
+        background-color: #00000008;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        cursor: pointer;
+    }
+    .user{
+        background-color: #fff;
+        border-radius: 50px;
+    }
+    .user:hover{
+        background-color: #00000008;
+        border-radius: 50px;
+    }
+    main{
+        margin:6rem 7% 0 7%;    
+        
+    }
+    .book{
+        display: grid;
+        grid-template-columns:  25% 75%;  
+    }
+    .gradient{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    .book-cover img{
+       
+        width: 100%;
+    }
+    .book-details{
+        padding-left: 1.5em;
+    }
+    .book-title{
+        font-size: 2em;
+    }
+    .author{
+        font-size: 1.2em;
+        padding-top: 0.3em;
+        font-style: italic;
+        font-weight: 500;
+    }
+    .description{
+        padding-top: 00.8em;
+        font-size: 1.2em;
+
+    }
+    .book_details_grid{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 2em;
+    }
+    .book_details_grid div div{
+        display: grid;
+        padding-bottom: 1em;
+        grid-template-columns: 1fr 2fr;
+    }
+    .book_details_grid div div p:last-child{
+       color:#797777;
+    }
+    .btn-download img{
+        width: 25px;
+        float: left;
+        color: #fff;
+    }
+    .btn-download{
+        display: block;
+        margin: auto;
+        margin-top: 1.5em;
+        color:#fff;
+        padding: 0.5em 0.8em;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 5px;
+        width: 10rem;
+        background-color: #F2A007;
+        transition: all 0.2s ease-out;
+    }
+    .btn-download:hover{
+        cursor: pointer;
+        background-color: #f2a007a0;
+    }
+    .comment-section h4{
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.7em;
+    }
+    .comment-section input, textarea{
+        width: 40%;
+        height: fit-content;
+        padding: 0.5rem 0.7em;
+        font-size: 1.2rem;
+        border: 1px rgb(225, 220, 220) solid;
+        border-radius: 5px;
+    }
+    .comment-section button{
+        background-color: #fff;
+        color:#1f1f1f;
+        padding: 0.5em 0.8em;
+        font-size: 1em;
+        border: none;
+        border-radius: 5px;
+        border: 1px rgb(225, 220, 220) solid;
+        width: 6rem;
+        transition: all 0.2s ease-out;
+    }   
+    .comment-section button:hover{
+        background-color: #00000008;
+        cursor: pointer;
+    }
+    .comment{
+        margin-top: 2em;
+        display: border-box;
+        padding: 1em;
+        background-color: #f0f0f0ae;
+        border-radius: 5px;
+    }
+    .user-name{
+        font-size: 1.4em;
+        padding-bottom: 0.5em;
+        color: #000;
+    }
+    .user-review{
+        font-size: 1.2em;
+        color: #1f1f1f;
+    }
+    hr{
+        margin-top: 5%;
+    }
+    footer{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.5%;
+    }
+    .footer-links ul{
+        display: flex;
+        list-style: none;
+    }
+    .footer-links li{
+        padding-left: 2em;
+    }
+    .footer-links a{
+        color: rgb(252, 159, 28);
+    }
+    .top-btn{
+        padding: 0.5em;
+        border-radius: 50px;
+        color: #1f1f1f !important;
+        background-color: #fff;
+        border: 1px rgb(225, 220, 220) solid;
+    }.error{
+       color: #e21a1a;
+       padding-bottom: 0.5em;
+    }
+</style>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <title>User profile</title>
+</head>
+<body>
+    <header>
+        <a href="/home"><div class="logo">
+            <img class="logo-img" src="../media/logo.svg" alt="logo image" width="60px">
+            <h2>Book<br>Smart</h2>
+        </div></a>
+        <nav>
+            <ul>              
+                <li><a href="/profile/user" ><img class="user" src="../media/user.svg" alt="user-icon" width="35px"/></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+       <h2>Profile</h2><hr class="hr">
+
+       <div class="profile-options">
+           <ul>
+               <li><button class="edit-profile enable">Edit Profile</button></li>
+               <li><button class="edit-password">Password & Security</button></li>
+           </ul>
+       </div>
+
+       <form class="edit-data" action="/update/user" method="post">
+            <% if(typeof msg != 'undefined') {%>
+                <% for (var i = 0; i < msg.length; i++) { %>
+                    <p class="error"><%= msg[i].msg %></p>
+                <% } %>
+            <% } %>
+
+            <% if(typeof messages != 'undefined') {%>
+                <p class="error"><%= messages %></p>  
+            <% } %>
+
+           <label for="first-name">First name</label><br>
+           <input type="text" id="first-name" name="first_name" value="<%= user.first_name %>" required><br><br>
+
+           <label for="last-name">Last name</label><br>
+           <input type="text" id="last-name" name="last_name" value="<%= user.last_name %>" required><br><br>
+
+           <label for="email">Email</label><br>
+           <input type="email" id="email" name="email"  value="<%= user.email %>" required readonly><br>
+
+           <button type="submit">Save</button>
+       </form>
+
+       <form class="edit-pass-data" action="/update/user/pass" method="post">
+            <% if(typeof error != 'undefined') {%>
+                <% for (var i = 0; i < error.length; i++) { %>
+                    <p class="error"><%= error[i].msg %></p>
+                <% } %>
+            <% } %>
+
+            <% if(typeof message != 'undefined') {%>  
+                    <p class="error"><%= message %></p> 
+            <% } %>
+
+            <label for="new-password">New Password</label><br>
+            <input type="password" id="new-password" name="new-password" required><br><br>
+
+            <label for="confirm-password">Confirm Password</label><br>
+            <input type="password" id="confirm-password" name="confirm-password" required><br>
+
+            <button type="submit">Save</button>
+        </form>
+
+        <a href="/logout"><button class="logout-btn">Log Out</button></a>
+        <a href="/delete/user"><button class="remove-btn">Delete Account</button></a>
+
+    </main><hr>
+    <footer>
+            <div class="copyright-info">
+                <p>Copyright &copy; 2022</p>
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li>Icons by <a href="https://iconscout.com">Iconscout</a></li>
+                    <li><a style="color: #000;">support@abc.com</a></li>
+                    <li><a href="">Privacy Policy</a></li>
+                    <li><a class="top-btn" href="#top">&uarr;</a></li>
+                </ul> 
+            </div>
+    </footer>
+</body>
+<script>
+    $(document).ready(()=>{
+      
+        $(".edit-password").click(()=>{
+            $(".edit-profile").removeClass('enable');
+            $(".edit-password").addClass('enable');
+            $(".edit-pass-data").css("display", "block");
+            $(".edit-data").css("display", "none")
+        })
+        $(".edit-profile").click(()=>{
+            $(".edit-password").removeClass('enable');
+            $(".edit-profile").addClass('enable');
+        $(".edit-data").css("display", "block")
+        $(".edit-pass-data").css("display", "none");
+        })
+    });
+    
+</script>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html{
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        max-width: 1500px;
+        margin: auto;
+        
+    } 
+    body{
+        margin: 2% 5%;
+    }
+    header{
+        display: flex;
+        justify-content: space-between;
+    }
+    header a{
+        color: #000;
+    }
+    .logo img, .logo h2{
+        float: left;
+        font-weight: 500;
+    }
+    nav ul{
+        list-style: none;
+        display: flex;
+    }
+    nav li{
+        padding-left: 2em;
+    }
+    .user{
+        background-color: #fff;
+        border-radius: 50px;
+    }
+    .user:hover{
+        background-color: #00000008;
+        border-radius: 50px;
+    }
+    main h2{
+       margin: 2em 0 0 8%; 
+       font-size: 2em;
+    }.hr{
+        margin: 0 8%;
+    }
+    .profile-options ul{
+        display: flex;
+        list-style: none;
+        margin:1em 0 0 8%;       
+    }
+    .profile-options li{
+        padding-right: 1.5em;
+    }
+    .profile-options button{
+        padding: 0.5em;
+        font-size: 0.8em;
+        color: #696767;
+        border: none;
+        background-color: transparent;
+        border-radius: 5px;
+    }
+    .profile-options button:hover{
+        cursor: pointer;
+        background-color: #00000008;
+    }.enable{
+        color: #000 !important;
+        background-color: #f2a007c8 !important;
+    }
+    .edit-pass-data{
+        display: none;
+    }
+    .edit-data, .edit-pass-data{
+        margin:2em 0 0 8%;
+    }
+    .edit-data input, .edit-pass-data input{
+        margin-top: 0.5em;
+        width: 20em;
+        height: fit-content;
+        padding: 0.5em;
+        font-size: 1.2rem;
+        border: 1px rgb(225, 220, 220) solid;
+        border-radius: 5px;
+    }
+    .edit-data button, .edit-pass-data button{
+        height: fit-content;
+        font-size: 1.2rem;
+        padding: 0.5em 0.9em;
+        border: none;
+        border-radius: 5px;
+        background-color: #F2A007;
+        color: #fff;
+        margin-top: 3%;
+        transition: all 0.2s ease-out;
+    }.edit-data button:hover, .edit-pass-data button:hover{
+        cursor: pointer;
+        background-color: #f2a007a0;
+    }
+    .logout-btn, .remove-btn{
+        margin-top: 2em;
+        margin-left: 8%;
+        padding: 0.5em 0.9em;       
+        height: fit-content;
+        font-size: 1.2rem;
+        border: 1px rgb(225, 220, 220) solid;
+        border-radius: 5px;
+        background-color: #1f1f1f;
+        color: #fafafa;
+    }
+    .logout-btn:hover, .remove-btn:hover{
+        background-color: #333;
+        cursor: pointer;
+    }
+    hr{
+        margin-top: 6%;
+    }
+    footer{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.5%;
+    }
+    .footer-links ul{
+        display: flex;
+        list-style: none;
+    }
+    .footer-links li{
+        padding-left: 2em;
+    }.footer-links a{
+        color: rgb(252, 159, 28);
+    }
+    .top-btn{
+        padding: 0.5em;
+        border-radius: 50px;
+        color: #1f1f1f !important;
+        background-color: #fff;
+        border: 1px rgb(225, 220, 220) solid;
+    }.error{
+       color: #e21a1a;
+       padding-bottom: 0.5em;
+    }
+</style>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SignUp Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <br>
+        <a href="/home">
+            <img class="logo-img" src="../media/logo.svg" alt="logo image" width="80px">
+            <h2>Book Smart</h2>
+        </a><br>
+    </header><hr>
+    <main>
+        <div class="signup-section">
+            <h1>Sign up </h1>
+            
+            <!--displaying errors if any-->
+            <% if(typeof msg != 'undefined') {%>
+                <p class="error"><%= msg %></p>
+            <% } %>
+
+            <% if(typeof err != 'undefined') {%>
+                <% for (var i = 0; i < err.length; i++) { %>
+                    <p class="error"><%= err[i].msg %></p>
+                <% } %>
+            <% } %>
+
+            <form action="/signup/user" method="post" class="signup_user">
+                <input type="text" id="first_name" name="first_name" placeholder="First name" required ><br><br>            
+                <input type="text" id="last_name" name="last_name" placeholder="Last name" required  ><br><br>            
+                <input type="text" id="email" name="email" placeholder="Email" required ><br><br>            
+                <input type="password" id="pass" name="pass" placeholder="Create password" required><br><br>
+                <input type="password" id="confirm_pass" name="confirm_pass" placeholder="Confirm password" required><br><br>
+                <button  class="submit-btn">Sign up</button>
+            </form>
+
+            <p>Already a member? <a class="signin-link" href="/login">Sign in</a></p>
+        </div>	
+        
+    </main>
+    <footer>
+        
+    </footer>
+</body>
+<script type = "text/javascript">
+    
+</script>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html{
+        width:100%;
+        height: auto;
+        text-align: center;
+    }
+    body{
+        max-width: 1000px;
+        margin: auto;
+    }
+    header a{
+    text-decoration: none;
+    color: #000;
+    }
+    
+    .signup-section{
+        width: 60%;
+        margin: auto;   
+        margin-top: 4vh;
+        display: border-box;
+        padding: 2vh 4vw;
+        border-radius: 20px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+    h1{
+        font-size: 2.4rem;
+        text-align: left;
+        padding-left: 18%;
+        margin-bottom: 3vh;
+    }
+    .signup-section p{
+        font-size: 1.4rem;
+        text-align: left;
+        padding-left: 18%;
+        padding-top:  0.2em;
+        padding-bottom: 1em;
+    }
+    input{
+        width: 60%;
+        height: fit-content;
+        padding: 0.8rem 2%;
+        font-size: 1.2rem;
+        border: 1px rgb(225, 220, 220) solid;
+        border-radius: 5px;
+    }
+    .submit-btn{
+        width: 64%;
+        height: fit-content;
+        font-size: 1.4rem;
+        padding: 0.6rem 0.6em;
+        border: none;
+        border-radius: 22px;
+        background-color: #F2A007;
+        color: #fff;
+        margin-bottom: 1vh;
+        transition: all 0.2s ease-out;
+    }.submit-btn:hover{
+        cursor: pointer;
+        background-color: #f2a007a0;
+    }
+    .signin-link{
+        text-decoration: underline;
+        color: rgb(0, 0, 0);
+    }.signin-link:active{
+        color: #f2a007a0;
+    }.signin-link:hover {
+        color: #177edf;
+    }
+    .error{
+       color: #e21a1a;
+    }
+    
+    </style>
+</html>
